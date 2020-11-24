@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import com.epam.jwd.model.Point;
 
 class Main {
-    static Logger logger = LogManager.getLogger();
+    private final static Logger LOGGER = LogManager.getLogger(Main.class;);
     public static void main(String[] args) {
         Point[] mas = new Point[5];
         Point nextPoint;
@@ -14,7 +14,7 @@ class Main {
             nextPoint = new Point(i, i);
             mas[i] = nextPoint;
             logger.log(Level.INFO, "Result is: " + mas[i].toString());
-	    System.out.println(mas[i].toString());
+	        System.out.println(mas[i].toString());
         }
     }
 }
