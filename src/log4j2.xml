@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration status ="WARN">
     <appenders>
         <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <Console name="Console_1" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
     </appenders>
@@ -9,5 +12,8 @@
         <root level="debug">
             <appender-ref ref="Console"/>
         </root>
+        <logger name = "mistakes" level = "error">
+            <appender-ref ref="Console_1"/>
+        </logger>
     </loggers>
 </configuration>
