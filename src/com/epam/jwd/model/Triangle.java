@@ -26,7 +26,7 @@ public class Triangle extends Line{
     public String resultOfValidation() throws IllegalArgumentException{
         if (!validation()){
             return "Exception happened";
-        } else if (!triangleValidation()){              //3 points on 1 line
+        } else if (!triangleValidation()){
             return "Exception happened";
         } else {
             return toString();
