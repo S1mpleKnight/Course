@@ -1,4 +1,4 @@
-package com.epam.jwd.entity.figures;
+package com.epam.jwd.model.figures;
 
 import com.epam.jwd.strategy.Strategy;
 

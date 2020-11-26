@@ -1,6 +1,6 @@
-package com.epam.jwd.entity.figures;
+package com.epam.jwd.model.figures;
 
-import com.epam.jwd.entity.Point;
+import com.epam.jwd.model.Point;
 
 public class Triangle extends Figure{
     private final Point firstPoint;
@@ -8,7 +8,7 @@ public class Triangle extends Figure{
     private final Point thirdPoint;
     private final String name;
 
-    public Triangle(Point firstPoint, Point secondPoint, Point thirdPoint, String name){
+    Triangle(Point firstPoint, Point secondPoint, Point thirdPoint, String name){
         this.firstPoint = firstPoint;
         this.secondPoint = secondPoint;
         this.thirdPoint = thirdPoint;

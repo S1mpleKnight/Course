@@ -1,4 +1,4 @@
-package com.epam.jwd.entity;
+package com.epam.jwd.model;
 
 import java.util.Objects;
 
@@ -7,7 +7,7 @@ public class Point{
     private final int y;
     private final String name;
 
-    public Point(int x, int y, String name){
+    Point(int x, int y, String name){
         this.x = x;
         this.y = y;
         this.name = name;

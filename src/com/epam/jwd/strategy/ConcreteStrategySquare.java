@@ -1,6 +1,6 @@
 package com.epam.jwd.strategy;
 
-import com.epam.jwd.entity.Point;
+import com.epam.jwd.model.Point;
 
 public class ConcreteStrategySquare implements Strategy{
     private static ConcreteStrategySquare singleStrategy;

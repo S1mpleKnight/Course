@@ -1,11 +1,11 @@
-package com.epam.jwd.entity.figures;
+package com.epam.jwd.model.figures;
 
-import com.epam.jwd.entity.Point;
+import com.epam.jwd.model.Point;
 
 public class Square extends Triangle{
     private final Point fourthPoint;
 
-    public Square(Point firstPoint, Point secondPoint, Point thirdPoint, Point fourthPoint, String name){
+    Square(Point firstPoint, Point secondPoint, Point thirdPoint, Point fourthPoint, String name){
         super(firstPoint, secondPoint, thirdPoint, name);
         this.fourthPoint = fourthPoint;
     }

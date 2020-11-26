@@ -1,10 +1,14 @@
 package com.epam.jwd.app;
 
-import com.epam.jwd.entity.Line;
-import com.epam.jwd.entity.Point;
-import com.epam.jwd.entity.figures.Figure;
-import com.epam.jwd.entity.figures.Square;
-import com.epam.jwd.entity.figures.Triangle;
+import com.epam.jwd.model.Line;
+import com.epam.jwd.model.LineFactory;
+import com.epam.jwd.model.Point;
+import com.epam.jwd.model.figures.Figure;
+import com.epam.jwd.model.figures.Square;
+import com.epam.jwd.model.figures.SquareFactory;
+import com.epam.jwd.model.figures.Triangle;
+import com.epam.jwd.model.PointFactory;
+import com.epam.jwd.model.figures.TriangleFactory;
 import com.epam.jwd.strategy.ConcreteStrategySquare;
 import com.epam.jwd.strategy.ConcreteStrategyTriangle;
 import org.apache.logging.log4j.Level;
@@ -27,15 +31,15 @@ public class Main {
     }
 
     public static void initialization(){
-        arrayOfPoints[0] = new Point(0,0, "A");
-        arrayOfPoints[1] = new Point(2,0, "B");
-        arrayOfPoints[2] = new Point(2,2, "C");
-        arrayOfPoints[3] = new Point(0,2, "D");
-        arrayOfLines[0] = new Line(arrayOfPoints[0], arrayOfPoints[1], "AB");
-        arrayOfLines[1] = new Line(arrayOfPoints[2], arrayOfPoints[3], "CD");
-        arrayOfTriangle[0] = new Triangle(arrayOfPoints[0], arrayOfPoints[1], arrayOfPoints[2], "ABC");
-        arrayOfTriangle[1] = new Triangle(arrayOfPoints[1], arrayOfPoints[2], arrayOfPoints[3], "BCD");
-        arrayOfSquare[0] = new Square(arrayOfPoints[0], arrayOfPoints[1], arrayOfPoints[2], arrayOfPoints[3], "ABCD");
+        arrayOfPoints[0] = PointFactory.createPoint(0,0, "A");
+        arrayOfPoints[1] = PointFactory.createPoint(2,0, "B");
+        arrayOfPoints[2] = PointFactory.createPoint(2,2, "C");
+        arrayOfPoints[3] = PointFactory.createPoint(0,2, "D");
+        arrayOfLines[0] = LineFactory.createLine(arrayOfPoints[0], arrayOfPoints[1], "AB");
+        arrayOfLines[1] = LineFactory.createLine(arrayOfPoints[2], arrayOfPoints[3], "CD");
+        arrayOfTriangle[0] = TriangleFactory.createTriangle(arrayOfPoints[0], arrayOfPoints[1], arrayOfPoints[2], "ABC");
+        arrayOfTriangle[1] = TriangleFactory.createTriangle(arrayOfPoints[1], arrayOfPoints[2], arrayOfPoints[3], "BCD");
+        arrayOfSquare[0] = SquareFactory.createSquare(arrayOfPoints[0], arrayOfPoints[1], arrayOfPoints[2], arrayOfPoints[3], "ABCD");
     }
 
     private static void printPointsInfo(){
