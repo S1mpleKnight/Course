@@ -1,9 +1,11 @@
-package com.epam.jwd.model;
+package com.epam.jwd.entity;
 
-public class Point {
-    private int x;
-    private int y;
-    private String name;
+import java.util.Objects;
+
+public class Point{
+    private final int x;
+    private final int y;
+    private final String name;
 
     public Point(int x, int y, String name){
         this.x = x;
@@ -17,10 +19,6 @@ public class Point {
 
     public int getY() {
         return y;
-    }
-
-    public String getName(){
-        return name;
     }
 
     @Override
@@ -38,6 +36,11 @@ public class Point {
         }
         Point point = (Point) anotherPoint;
         return x == point.x && y == point.y;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(x, y, name);
     }
 
     public static double destinationBetweenPoints(Point firstPoint, Point secondPoint){

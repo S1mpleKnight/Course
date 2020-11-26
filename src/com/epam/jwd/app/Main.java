@@ -1,17 +1,23 @@
 package com.epam.jwd.app;
 
-import com.epam.jwd.model.*;
+import com.epam.jwd.entity.Line;
+import com.epam.jwd.entity.Point;
+import com.epam.jwd.entity.figures.Figure;
+import com.epam.jwd.entity.figures.Square;
+import com.epam.jwd.entity.figures.Triangle;
+import com.epam.jwd.strategy.ConcreteStrategySquare;
+import com.epam.jwd.strategy.ConcreteStrategyTriangle;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Main {
     static Point[] arrayOfPoints = new Point[4];
-    static Figure[] arrayOfLines = new Line[2];
+    static Line[] arrayOfLines = new Line[2];
     static Figure[] arrayOfTriangle = new Triangle[2];
     static Figure[] arrayOfSquare = new Square[1];
     public static final Logger LOGGER = LogManager.getLogger(Main.class.getName());
-    
+
     public static void main(String[] args) {
         initialization();
         printPointsInfo();
@@ -22,9 +28,9 @@ public class Main {
 
     public static void initialization(){
         arrayOfPoints[0] = new Point(0,0, "A");
-        arrayOfPoints[1] = new Point(1,1, "B");
+        arrayOfPoints[1] = new Point(2,0, "B");
         arrayOfPoints[2] = new Point(2,2, "C");
-        arrayOfPoints[3] = new Point(2,2, "D");
+        arrayOfPoints[3] = new Point(0,2, "D");
         arrayOfLines[0] = new Line(arrayOfPoints[0], arrayOfPoints[1], "AB");
         arrayOfLines[1] = new Line(arrayOfPoints[2], arrayOfPoints[3], "CD");
         arrayOfTriangle[0] = new Triangle(arrayOfPoints[0], arrayOfPoints[1], arrayOfPoints[2], "ABC");
@@ -41,7 +47,7 @@ public class Main {
     }
 
     private static void printLinesInfo(){
-        for (Figure arrayOfLine : arrayOfLines){
+        for (Line arrayOfLine : arrayOfLines){
             try{
                 LOGGER.log(Level.INFO, arrayOfLine.resultOfValidation());
             } catch (IllegalArgumentException exception){
@@ -51,9 +57,13 @@ public class Main {
     }
 
     private static void printTriangleInfo(){
-        for (Figure triangle : arrayOfTriangle){
+        for (Figure figure : arrayOfTriangle){
+            if (figure instanceof Triangle){
+                figure.setStrategy(ConcreteStrategyTriangle.SINGLESTRATEGY);
+            }
             try{
-                LOGGER.log(Level.INFO, triangle.resultOfValidation());
+                LOGGER.log(Level.INFO, figure.resultOfValidation());
+                LOGGER.log(Level.INFO, figure.showFigureInformation());
             } catch (IllegalArgumentException exception){
                 LOGGER.log(Level.ERROR, exception.getMessage());
             }
@@ -61,9 +71,13 @@ public class Main {
     }
 
     private static void printSquareInfo(){
-        for (Figure square : arrayOfSquare){
+        for (Figure figure : arrayOfSquare){
+            if (figure instanceof Square){
+                figure.setStrategy(ConcreteStrategySquare.getSingleStrategy());
+            }
             try{
-                LOGGER.log(Level.INFO, square.resultOfValidation());
+                LOGGER.log(Level.INFO, figure.resultOfValidation());
+                LOGGER.log(Level.INFO, figure.showFigureInformation());
             } catch (IllegalArgumentException exception){
                 LOGGER.log(Level.ERROR, exception.getMessage());
             }

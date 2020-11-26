@@ -1,16 +1,27 @@
-package com.epam.jwd.model;
+package com.epam.jwd.entity.figures;
+
+import com.epam.jwd.entity.Point;
 
 public class Square extends Triangle{
-    private Point fourthPoint;
+    private final Point fourthPoint;
 
     public Square(Point firstPoint, Point secondPoint, Point thirdPoint, Point fourthPoint, String name){
         super(firstPoint, secondPoint, thirdPoint, name);
         this.fourthPoint = fourthPoint;
-
     }
 
     public Point getFourthPoint(){
         return fourthPoint;
+    }
+
+    @Override
+    protected double executeStrategyAreaCalculation(){
+        return getFigurePropertiesStrategy().calculateTheArea(getFirstPoint(), getSecondPoint());
+    }
+
+    @Override
+    protected double executeStrategyPerimeterCalculation(){
+        return getFigurePropertiesStrategy().calculateThePerimeter(getFirstPoint(), getSecondPoint());
     }
 
     @Override
@@ -37,7 +48,7 @@ public class Square extends Triangle{
 
     @Override
     public String toString(){
-        return "Square: " + getFirstPoint() + getSecondPoint() + getThirdPoint() + getFourthPoint();
+        return "Square " + getName() + ": " + getFirstPoint() + getSecondPoint() + getThirdPoint() + getFourthPoint();
     }
 
     private boolean squareValidation() throws IllegalArgumentException{
@@ -50,5 +61,10 @@ public class Square extends Triangle{
         } else {
             throw new IllegalArgumentException("Объект " + toString() + "не является квадратом");
         }
+    }
+
+    @Override
+    public String showFigureInformation(){
+       return "Perimeter: " + executeStrategyPerimeterCalculation() + " Area: " + executeStrategyAreaCalculation();
     }
 }
