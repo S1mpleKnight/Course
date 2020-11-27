@@ -1,7 +1,6 @@
 package com.epam.jwd.model.figures;
 
 import com.epam.jwd.model.Point;
-import com.epam.jwd.model.figures.Square;
 
 public class SquareFactory{
     private static Square[] allCreatedSquares = new Square[2];
