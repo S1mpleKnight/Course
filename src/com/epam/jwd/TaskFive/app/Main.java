@@ -1,21 +1,19 @@
 package com.epam.jwd.TaskFive.app;
 
-import com.epam.jwd.TaskFive.exception.DecoratorException;
 import com.epam.jwd.TaskFive.exception.FigureException;
-import com.epam.jwd.TaskFive.factory.FigureFactory;
-import com.epam.jwd.TaskFive.model.ApplicationContext;
-import com.epam.jwd.TaskFive.model.figures.SimpleApplicationContext;
 import com.epam.jwd.TaskFive.model.unitFigure.Point;
 import com.epam.jwd.TaskFive.model.figures.Figure;
 import com.epam.jwd.TaskFive.model.GeometryUnitType;
 import com.epam.jwd.TaskFive.model.unitFigure.UnitFigure;
 import com.epam.jwd.TaskFive.model.unitFigure.UnitFigureFactory;
+import com.epam.jwd.TaskFive.service.api.FigureCrud;
+import com.epam.jwd.TaskFive.service.storage.FigureCrudImpl;
+import com.epam.jwd.TaskFive.service.storage.SearchCriterion;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -29,17 +27,30 @@ public class Main {
     public static final Logger LOGGER = LogManager.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
-        final ApplicationContext APPLICATION_CONTEXT = new SimpleApplicationContext();
+        final FigureCrud FACTORY = FigureCrudImpl.getFigureCrud();
+        ArrayList<Point> list = new ArrayList<>(6);
+        createEntities(list, FACTORY);
+        final SearchCriterion criterion = createSomeCriterion();
         try{
-            final FigureFactory FACTORY = APPLICATION_CONTEXT.createFigureFactory();
-            ArrayList<Point> list = new ArrayList<>(6);
-            createEntities(list, FACTORY);
-        } catch (DecoratorException e){
-            LOGGER.log(Level.ERROR, e.getMessage());
-        }
+                LOGGER.log(Level.INFO, FACTORY.findByCriterion(criterion)
+                        .stream()
+                        .findAny()
+                );
+            } catch (FigureException e){
+                e.printStackTrace();
+                LOGGER.log(Level.ERROR, e.getMessage());
+            }
     }
 
-    private static void createEntities(ArrayList<Point> array, FigureFactory factory){
+
+    private static SearchCriterion createSomeCriterion(){
+        return SearchCriterion.builder()
+                .point((Point) ARRAY_OF_POINTS.get(0))
+                .type(GeometryUnitType.TRIANGLE)
+                .build();
+    }
+
+    private static void createEntities(ArrayList<Point> array, FigureCrud factory){
         createPoints();
         createLines();
         createTriangles(factory);
@@ -85,7 +96,7 @@ public class Main {
         }while (i < 2);
     }
 
-    private static void createTriangles(FigureFactory factory){
+    private static void createTriangles(FigureCrud factory){
         int i = 0;
         do{
             try{
@@ -104,7 +115,7 @@ public class Main {
         }while (i < 2);
     }
 
-    private static void createSquare(FigureFactory factory){
+    private static void createSquare(FigureCrud factory){
         try{
             Point[] arrayForThisSquare = {(Point) ARRAY_OF_POINTS.get(0),
                     (Point) ARRAY_OF_POINTS.get(1),
@@ -119,7 +130,7 @@ public class Main {
         }
     }
 
-    private static void createMultiAngles(ArrayList<Point> list, FigureFactory factory){
+    private static void createMultiAngles(ArrayList<Point> list, FigureCrud factory){
         int i = 0, amount = 4;
         do{
             try{

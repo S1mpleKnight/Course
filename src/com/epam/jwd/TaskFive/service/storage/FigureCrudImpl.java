@@ -17,11 +17,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FigureCrudImpl implements FigureCrud{
     private static final FigureStorage STORAGE = FigureStorage.getSingleStorage();
     private static FigureFactory FACTORY;
     private static final Logger LOGGER = LogManager.getLogger(FigureCrudImpl.class.getName());
+    private static FigureCrudImpl figureCrud;
 
     static{
         try{
@@ -29,6 +31,16 @@ public class FigureCrudImpl implements FigureCrud{
         } catch (DecoratorException e){
             LOGGER.log(Level.FATAL, e.getMessage());
         }
+    }
+
+    private FigureCrudImpl(){
+    }
+
+    public static FigureCrud getFigureCrud(){
+        if (figureCrud == null ){
+            figureCrud = new FigureCrudImpl();
+        }
+        return figureCrud;
     }
 
     @Override
@@ -87,7 +99,7 @@ public class FigureCrudImpl implements FigureCrud{
     }
 
     private List<Figure> nameCheck(SearchCriterion criterion, List<Figure> list){
-        if (criterion == null){
+        if (criterion.getName() == null){
             return list;
         } else {
             List<Figure> anotherList = new ArrayList<>();
@@ -108,19 +120,16 @@ public class FigureCrudImpl implements FigureCrud{
             for (Figure figure: list){
                 if (figure instanceof Triangle){
                     if (((Triangle) figure).containPoint(criterion.getPoint())){
-                        list.add(figure);
+                        anotherList.add(figure);
                     }
-                    break;
                 } else if (figure instanceof Square){
                     if (((Square) figure).containPoint(criterion.getPoint())){
-                        list.add(figure);
-                    }
-                    break;
+                        anotherList.add(figure);
+                    };
                 } else if (figure instanceof MultiAngleFigure){
                     if (((MultiAngleFigure) figure).containPoint(criterion.getPoint())){
-                        list.add(figure);
+                        anotherList.add(figure);
                     }
-                    break;
                 } else {
                     throw new FigureException("Point check mistake");
                 }
@@ -146,13 +155,13 @@ public class FigureCrudImpl implements FigureCrud{
                             anotherList.add(figure);
                         }
                         break;
-                    case POINT:
+                    case TRIANGLE:
                         if (figure instanceof Triangle){
                             anotherList.add(figure);
                         }
                         break;
                     case LINE:
-                    case TRIANGLE:
+                    case POINT:
                         throw new FigureException("Type check mistake: Wrong type");
                     default:
                         throw new FigureException("Type check mistake");
@@ -168,6 +177,11 @@ public class FigureCrudImpl implements FigureCrud{
             for (int i = criterion.getStartIndex(); i < criterion.getStartIndex() + criterion.getRange(); i++){
                 interval.add(STORAGE.takeFigure(i));
             }
+        } else if (criterion.getStartIndex() != 0){
+            interval = STORAGE.takeFIGURES().values()
+                    .stream()
+                    .skip(criterion.getStartIndex())
+                    .collect(Collectors.toList());
         } else {
             interval.addAll(STORAGE.takeFIGURES().values());
         }
