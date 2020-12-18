@@ -63,7 +63,7 @@ public class FigureCrudImpl implements FigureCrud{
                 return figureList;
             case MULTI_ANGLE:
                 int j = 0, n;
-                n = (names.length % 6 == 0) ? 6 : ((names.length % 5 == 0) ? 5 : 4);
+                n = list.size() / names;
                 for (String name: names){
                     figureList.add(createFigure(type, name, list.subList(j, j + n)));
                     j += n;
